@@ -12,9 +12,9 @@ services:
   app:
     image: app
     build: .
-    command: wait-for-it db:5432 -- ./manage.py runserver 0.0.0.0:8000
+    command: wait-for-it db:5432 -- hypercorn --bind 0.0.0.0:8000 app.asgi:application
     ports:
-      - "8000:8000"
+      - 8000:8000
     depends_on:
       - db
       - mq
